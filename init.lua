@@ -1,3 +1,8 @@
+local os = vim.loop.os_uname()
+vim.g.is_wsl = string.find(string.lower(os.release), 'wsl') ~= nil
+vim.g.is_linux = os.sysname == 'Linux'
+vim.g.is_windows = os.sysname == 'Windows_NT'
+
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
@@ -31,6 +36,7 @@ dofile(vim.g.base46_cache .. "statusline")
 
 require "options"
 require "nvchad.autocmds"
+require "autocmd"
 
 vim.schedule(function()
   require "mappings"
