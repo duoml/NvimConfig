@@ -35,6 +35,8 @@ return {
         "cmake",
         "ninja",
         "gn",
+        "bash",
+        "regex",
       },
     },
   },
