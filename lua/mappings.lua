@@ -20,6 +20,10 @@ M.CMD = {
       ":",
       "CMD enter command mode",
     },
+    ["<leader>q"] = {
+      "<cmd> q <cr>",
+      "CMD quit",
+    },
   },
   i = {
     ["jj"] = {
@@ -31,6 +35,14 @@ M.CMD = {
 
 M.ssr = {
   n = {
+    ["<leader>sr"] = {
+      function()
+        require("ssr").open()
+      end,
+      "SSR Structural search and replace",
+    },
+  },
+  v = {
     ["<leader>sr"] = {
       function()
         require("ssr").open()
@@ -69,18 +81,30 @@ M.hop = {
       end,
       "Hop lines BC",
     },
+    f = {
+      function()
+        require("hop").hint_char1 { AC }
+      end,
+      "Hop chars AC",
+    },
+    F = {
+      function()
+        require("hop").hint_char1 { BC }
+      end,
+      "Hop chars BC",
+    },
   },
 }
 
 M.lsp = {
   n = {
     ["<leader>fd"] = {
-      function ()
+      function()
         vim.diagnostic.open_float()
       end,
-      "LSP open float diagnostic"
-    }
-  }
+      "LSP open float diagnostic",
+    },
+  },
 }
 
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")

@@ -2,13 +2,21 @@ local autocmd = vim.api.nvim_create_autocmd
 
 -- open last read position
 autocmd("BufReadPost", {
-  -- group = vim.g.user.event,
-  callback = function(args)
-    local valid_line = vim.fn.line [['"]] >= 1 and vim.fn.line [['"]] < vim.fn.line "$"
-    local not_commit = vim.b[args.buf].filetype ~= "commit"
+  pattern = "*",
+  callback = function()
+    local ft = vim.opt_local.filetype:get()
+    local exclude_fts = { gitcommit = true, gitrebase = true }
+    if exclude_fts[ft] then
+      return
+    end
 
-    if valid_line and not_commit then
-      vim.cmd [[normal! g`"]]
+    local markpos = vim.api.nvim_buf_get_mark(0, '"')
+    if markpos then
+      local line = markpos[1]
+      local col = markpos[2]
+      if (line > 1) and (line <= vim.api.nvim_buf_line_count(0)) then
+        vim.api.nvim_win_set_cursor(0, { line, col })
+      end
     end
   end,
 })

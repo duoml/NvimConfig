@@ -19,6 +19,13 @@ if vim.g.is_wsl then
     cache_enabled = 0,
   }
 elseif vim.g.is_linux then
+  function my_paste(reg)
+    return function(lines)
+      local content = vim.fn.getreg '"'
+      return vim.split(content, "\n")
+    end
+  end
+  vim.opt.clipboard:append "unnamedplus"
   vim.g.clipboard = {
     name = "OSC 52",
     copy = {
@@ -26,8 +33,11 @@ elseif vim.g.is_linux then
       ["*"] = require("vim.ui.clipboard.osc52").copy "*",
     },
     paste = {
-      ["+"] = function () end,
-      ["*"] = function () end,
+      ["+"] = my_paste "+",
+      ["*"] = my_paste "*",
     },
   }
 end
+
+vim.api.nvim_set_option_value("colorcolumn", "120", {})
+vim.opt.termguicolors = true

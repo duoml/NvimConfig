@@ -43,8 +43,10 @@ return {
     event = "VeryLazy", -- Or `LspAttach`
     priority = 1000, -- needs to be loaded in first
     config = function()
+      require("tiny-inline-diagnostic").setup {
+        preset = "simple",
+      }
       vim.diagnostic.config { virtual_text = false }
-      require("tiny-inline-diagnostic").setup()
     end,
   },
   {
@@ -79,5 +81,6 @@ return {
   {
     "cshuaimin/ssr.nvim",
     module = "ssr",
+    event = "ModeChanged *:[vV\x16]*",
   },
 }
