@@ -8,6 +8,16 @@ return {
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      {
+        "SmiteshP/nvim-navbuddy",
+        dependencies = {
+          "SmiteshP/nvim-navic",
+          "MunifTanjim/nui.nvim",
+        },
+        opts = { lsp = { auto_attach = true } },
+      },
+    },
     config = function()
       require "configs.lspconfig"
     end,
@@ -84,5 +94,9 @@ return {
     "cshuaimin/ssr.nvim",
     module = "ssr",
     event = "ModeChanged *:[vV\x16]*",
+  },
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "make",
   },
 }

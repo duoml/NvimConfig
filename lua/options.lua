@@ -41,3 +41,4 @@ end
 
 vim.api.nvim_set_option_value("colorcolumn", "120", {})
 vim.opt.termguicolors = true
+require('telescope').load_extension('fzf')
