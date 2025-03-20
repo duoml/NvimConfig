@@ -42,7 +42,7 @@ local M = {
   },
   lsp = {
     progress = {
-      enabled = true,
+      enabled = false,
     },
     hover = {
       enabled = false,
