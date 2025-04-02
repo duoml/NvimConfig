@@ -24,6 +24,12 @@ M.CMD = {
       "<cmd> q <cr>",
       "CMD quit",
     },
+    ["<F3>"] = {
+      function ()
+        require("nvim-navbuddy").open()
+      end,
+      "CMD open structure",
+    },
   },
   i = {
     ["jj"] = {
@@ -105,6 +111,52 @@ M.lsp = {
       "LSP open float diagnostic",
     },
   },
+}
+
+M.gitsigns = {
+  n = {
+    ["<F53>"] = {
+      function()
+        require('gitsigns').nav_hunk('next')
+      end,
+      "Gitsigns next hunk"
+    },
+    ["<A-S-F5>"] = {
+      function()
+        require('gitsigns').nav_hunk('prev')
+      end,
+      "Gitsigns next hunk"
+    },
+    ["<leader>ph"] = {
+      function()
+        require('gitsigns').preview_hunk()
+      end,
+      "Gitsigns preview hunk"
+    },
+    ["<leader>rh"] = {
+      function()
+        require('gitsigns').reset_hunk()
+      end,
+      "Gitsigns reset hunk"
+    },
+    ["<leader>bl"] = {
+      function()
+        require('gitsigns').blame_line()
+      end,
+      "Gitsigns blame line"
+    },
+  }
+}
+
+M.telescope = {
+  n = {
+    ["<leader>gr"] = {
+      function ()
+        require("telescope.builtin").lsp_references()
+      end,
+      "Telescope Find lsp references"
+    }
+  }
 }
 
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")

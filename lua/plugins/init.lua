@@ -63,7 +63,6 @@ return {
   },
   {
     "NeogitOrg/neogit",
-    lazy = true,
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
@@ -72,14 +71,13 @@ return {
       -- "ibhagwan/fzf-lua", -- optional
       -- "echasnovski/mini.pick", -- optional
     },
+    cmd = "Neogit",
     config = true,
   },
   {
     "smoka7/hop.nvim",
     event = "VeryLazy",
-    config = function()
-      require("hop").setup {}
-    end,
+    opts = {},
   },
   {
     "folke/noice.nvim",
