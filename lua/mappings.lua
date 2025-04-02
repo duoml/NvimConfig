@@ -107,6 +107,41 @@ M.lsp = {
   },
 }
 
+M.gitsigns = {
+  n = {
+    ["<F53>"] = {
+      function()
+        require('gitsigns').nav_hunk('next')
+      end,
+      "Gitsigns next hunk"
+    },
+    ["<A-S-F5>"] = {
+      function()
+        require('gitsigns').nav_hunk('prev')
+      end,
+      "Gitsigns next hunk"
+    },
+    ["<leader>ph"] = {
+      function()
+        require('gitsigns').preview_hunk()
+      end,
+      "Gitsigns preview hunk"
+    },
+    ["<leader>rh"] = {
+      function()
+        require('gitsigns').reset_hunk()
+      end,
+      "Gitsigns reset hunk"
+    },
+    ["<leader>bl"] = {
+      function()
+        require('gitsigns').blame_line()
+      end,
+      "Gitsigns blame line"
+    },
+  }
+}
+
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 for mode, configs in pairs(disabled) do
