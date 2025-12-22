@@ -2,175 +2,213 @@ require "nvchad.mappings"
 
 -- add yours here
 
-local disabled = {
-  n = {
-    "<leader>h",
-    "<leader>v",
-  },
-}
-
 local map = vim.keymap.set
 local nomap = vim.keymap.del
 
 local M = {}
 
-M.CMD = {
-  n = {
-    [";"] = {
-      ":",
-      "CMD enter command mode",
-    },
-    ["<leader>q"] = {
-      "<cmd> q <cr>",
-      "CMD quit",
-    },
-    ["<F3>"] = {
-      function ()
-        require("nvim-navbuddy").open()
-      end,
-      "CMD open structure",
-    },
+-- 通用配置：支持跨模式映射
+M.general = {
+  {
+    modes = { "n", "i", "v" },
+    key = "<C-s>",
+    action = "<cmd> w <cr>",
+    desc = "Save file",
   },
-  i = {
-    ["jj"] = {
-      "<ESC>",
-      "CMD exit input mode",
-    },
+  {
+    modes = { "n" },
+    key = ";",
+    action = ":",
+    desc = "Enter command mode",
   },
+  {
+    modes = { "n" },
+    key = "<leader>q",
+    action = "<cmd> q <cr>",
+    desc = "Quit",
+  },
+  {
+    modes = { "i" },
+    key = "jj",
+    action = "<ESC>",
+    desc = "Exit insert mode",
+  },
+  {
+    modes = { "n" },
+    key = "<F3>",
+    action = function()
+      require("nvim-navbuddy").open()
+    end,
+    desc = "Open structure",
+  },
+  {
+    modes = { "v" },
+    key = "<leader>fm",
+    action = function()
+      require("conform").format { async = true, lsp_fallback = true }
+    end,
+    desc = "format selected"
+  }
 }
 
+-- SSR 配置
 M.ssr = {
-  n = {
-    ["<leader>sr"] = {
-      function()
-        require("ssr").open()
-      end,
-      "SSR Structural search and replace",
-    },
-  },
-  v = {
-    ["<leader>sr"] = {
-      function()
-        require("ssr").open()
-      end,
-      "SSR Structural search and replace",
-    },
+  {
+    modes = { "n", "v" },
+    key = "<leader>sr",
+    action = function()
+      require("ssr").open()
+    end,
+    desc = "Structural search and replace",
   },
 }
 
+-- Hop 配置
 local BC = { direction = require("hop.hint").HintDirection.BEFORE_CURSOR }
 local AC = { direction = require("hop.hint").HintDirection.AFTER_CURSOR }
 
 M.hop = {
-  n = {
-    ["<leader><leader>w"] = {
-      function()
-        require("hop").hint_words(AC)
-      end,
-      "Hop words AC",
-    },
-    ["<leader><leader>b"] = {
-      function()
-        require("hop").hint_words(BC)
-      end,
-      "Hop words BC",
-    },
-    ["<leader><leader>j"] = {
-      function()
-        require("hop").hint_lines_skip_whitespace(AC)
-      end,
-      "Hop lines AC",
-    },
-    ["<leader><leader>k"] = {
-      function()
-        require("hop").hint_lines_skip_whitespace(BC)
-      end,
-      "Hop lines BC",
-    },
-    f = {
-      function()
-        require("hop").hint_char1 { AC }
-      end,
-      "Hop chars AC",
-    },
-    F = {
-      function()
-        require("hop").hint_char1 { BC }
-      end,
-      "Hop chars BC",
-    },
+  {
+    modes = { "n" },
+    key = "<leader><leader>w",
+    action = function()
+      require("hop").hint_words(AC)
+    end,
+    desc = "words AC",
+  },
+  {
+    modes = { "n" },
+    key = "<leader><leader>b",
+    action = function()
+      require("hop").hint_words(BC)
+    end,
+    desc = "words BC",
+  },
+  {
+    modes = { "n" },
+    key = "<leader><leader>j",
+    action = function()
+      require("hop").hint_lines_skip_whitespace(AC)
+    end,
+    desc = "lines AC",
+  },
+  {
+    modes = { "n" },
+    key = "<leader><leader>k",
+    action = function()
+      require("hop").hint_lines_skip_whitespace(BC)
+    end,
+    desc = "lines BC",
+  },
+  {
+    modes = { "n" },
+    key = "f",
+    action = function()
+      require("hop").hint_char1(AC)
+    end,
+    desc = "chars AC",
+  },
+  {
+    modes = { "n" },
+    key = "F",
+    action = function()
+      require("hop").hint_char1(BC)
+    end,
+    desc = "chars BC",
   },
 }
 
+-- LSP 配置
 M.lsp = {
-  n = {
-    ["<leader>fd"] = {
-      function()
-        vim.diagnostic.open_float()
-      end,
-      "LSP open float diagnostic",
-    },
+  {
+    modes = { "n" },
+    key = "<leader>fd",
+    action = function()
+      vim.diagnostic.open_float()
+    end,
+    desc = "open float diagnostic",
   },
 }
 
+-- Gitsigns 配置（修正键位）
 M.gitsigns = {
-  n = {
-    ["<F53>"] = {
-      function()
-        require('gitsigns').nav_hunk('next')
-      end,
-      "Gitsigns next hunk"
-    },
-    ["<A-S-F5>"] = {
-      function()
-        require('gitsigns').nav_hunk('prev')
-      end,
-      "Gitsigns next hunk"
-    },
-    ["<leader>ph"] = {
-      function()
-        require('gitsigns').preview_hunk()
-      end,
-      "Gitsigns preview hunk"
-    },
-    ["<leader>rh"] = {
-      function()
-        require('gitsigns').reset_hunk()
-      end,
-      "Gitsigns reset hunk"
-    },
-    ["<leader>bl"] = {
-      function()
-        require('gitsigns').blame_line()
-      end,
-      "Gitsigns blame line"
-    },
-  }
+  {
+    modes = { "n" },
+    key = "<leader>gn",
+    action = function()
+      require('gitsigns').nav_hunk('next')
+    end,
+    desc = "next hunk",
+  },
+  {
+    modes = { "n" },
+    key = "<leader>gp",
+    action = function()
+      require('gitsigns').nav_hunk('prev')
+    end,
+    desc = "prev hunk",
+  },
+  {
+    modes = { "n" },
+    key = "<leader>ph",
+    action = function()
+      require('gitsigns').preview_hunk()
+    end,
+    desc = "preview hunk",
+  },
+  {
+    modes = { "n" },
+    key = "<leader>rh",
+    action = function()
+      require('gitsigns').reset_hunk()
+    end,
+    desc = "reset hunk",
+  },
+  {
+    modes = { "n" },
+    key = "<leader>bl",
+    action = function()
+      require('gitsigns').blame_line()
+    end,
+    desc = "blame line",
+  },
 }
 
+-- Telescope 配置
 M.telescope = {
-  n = {
-    ["<leader>gr"] = {
-      function ()
-        require("telescope.builtin").lsp_references()
-      end,
-      "Telescope Find lsp references"
-    }
-  }
+  {
+    modes = { "n" },
+    key = "<leader>gr",
+    action = function()
+      require("telescope.builtin").lsp_references()
+    end,
+    desc = "Find lsp references",
+  },
 }
 
-map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+-- 要禁用的键位
+local disabled = {
+  {
+    modes = { "n" },
+    key = "<leader>h",
+  },
+  {
+    modes = { "n" },
+    key = "<leader>v",
+  },
+}
 
-for mode, configs in pairs(disabled) do
-  for _, key in pairs(configs) do
-    nomap(mode, key)
+-- 应用禁用的键位
+for _, config in ipairs(disabled) do
+  for _, mode in ipairs(config.modes) do
+    nomap(mode, config.key)
   end
 end
 
-for _, configs in pairs(M) do
-  for mode, mappings in pairs(configs) do
-    for key, val in pairs(mappings) do
-      map(mode, key, val[1], { desc = val[2] })
-    end
+-- 应用所有键位映射
+for group_name, group in pairs(M) do
+  for _, mapping in ipairs(group) do
+    local full_desc = group_name .. " " .. mapping.desc
+    map(mapping.modes, mapping.key, mapping.action, { desc = full_desc })
   end
 end

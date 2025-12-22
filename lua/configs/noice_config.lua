@@ -6,15 +6,16 @@ local M = {
         col = "50%",
       },
       size = {
-        width = 60,
+        width = "auto",
         height = "auto",
       },
       border = {
-        style = "none",
+        style = "rounded",
         padding = { 0, 1 },
       },
       win_options = {
-        winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+        winhighlight = "NormalFloat:NoiceCmdlinePopup,FloatBorder:NoiceCmdlinePopupBorder,CursorLine:PmenuSel,Search:None",
+        -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
       },
     },
     popupmenu = {
@@ -28,11 +29,11 @@ local M = {
         height = "auto",
       },
       border = {
-        style = "none",
+        style = "rounded",
         padding = { 0, 1 },
       },
       win_options = {
-        winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+        winhighlight = "NormalFloat:NoiceCmdlinePopup,FloatBorder:NoiceCmdlinePopupBorder,CursorLine:PmenuSel,Search:None",
       },
     },
   },
