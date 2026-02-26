@@ -33,6 +33,8 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    build = ':TSUpdate',
     opts = {
       ensure_installed = {
         "vim",
@@ -53,11 +55,12 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     event = "VeryLazy",
+    branch = 'main',
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      require("nvim-treesitter.configs").setup {
+      require("nvim-treesitter").setup {
         textobjects = {
           select = {
             enable = true,
