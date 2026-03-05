@@ -1,21 +1,16 @@
 local autocmd = vim.api.nvim_create_autocmd
 
--- open last read position
+-- 自动恢复光标位置
 autocmd("BufReadPost", {
-  pattern = "*",
-  callback = function()
-    local ft = vim.opt_local.filetype:get()
-    local exclude_fts = { gitcommit = true, gitrebase = true }
-    if exclude_fts[ft] then
-      return
-    end
+  callback = function(args)
+    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+    local line_count = vim.api.nvim_buf_line_count(args.buf)
 
-    local markpos = vim.api.nvim_buf_get_mark(0, '"')
-    if markpos then
-      local line = markpos[1]
-      local col = markpos[2]
-      if (line > 1) and (line <= vim.api.nvim_buf_line_count(0)) then
-        vim.api.nvim_win_set_cursor(0, { line, col })
+    -- 排除特定文件类型，并确保标记行号在有效范围内
+    if mark[1] > 0 and mark[1] <= line_count then
+      -- 排除 git 相关的 buffer
+      if not vim.tbl_contains({ "gitcommit", "gitrebase" }, vim.bo[args.buf].filetype) then
+        pcall(vim.api.nvim_win_set_cursor, 0, mark)
       end
     end
   end,

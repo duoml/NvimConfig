@@ -33,13 +33,8 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = false,
-    build = ':TSUpdate',
     opts = {
       ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
         "cpp",
         "c",
         "javascript",
@@ -49,32 +44,28 @@ return {
         "gn",
         "bash",
         "regex",
+        "python",
+        "kotlin",
       },
     },
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     event = "VeryLazy",
-    branch = 'main',
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
+    branch = "main",
+    init = function()
+      vim.g.no_plugin_maps = true
+    end,
     config = function()
-      require("nvim-treesitter").setup {
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["aa"] = "@parameter.outer",
-              ["ia"] = "@parameter.inner",
-            }
-          }
-        }
+      require("nvim-treesitter-textobjects").setup {
+        select = {
+          -- Automatically jump forward to textobj, similar to targets.vim
+          lookahead = true,
+          -- and should return true of false
+          include_surrounding_whitespace = false,
+        },
       }
-    end
+    end,
   },
   {
     "rachartier/tiny-inline-diagnostic.nvim",
@@ -122,5 +113,6 @@ return {
   {
     "nvim-telescope/telescope-fzf-native.nvim",
     build = "make",
+    lazy = false,
   },
 }

@@ -7,7 +7,7 @@ local nomap = vim.keymap.del
 
 local M = {}
 
--- 通用配置：支持跨模式映射
+-- 通用配置
 M.general = {
   {
     modes = { "n", "i", "v" },
@@ -47,8 +47,40 @@ M.general = {
     action = function()
       require("conform").format { async = true, lsp_fallback = true }
     end,
-    desc = "format selected"
-  }
+    desc = "format selected",
+  },
+  {
+    modes = { "x", "o" },
+    key = "af",
+    action = function()
+      require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+    end,
+    desc = "",
+  },
+  {
+    modes = { "x", "o" },
+    key = "if",
+    action = function()
+      require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+    end,
+    desc = "",
+  },
+  {
+    modes = { "x", "o" },
+    key = "aa",
+    action = function()
+      require("nvim-treesitter-textobjects.select").select_textobject("@parameter.outer", "textobjects")
+    end,
+    desc = "",
+  },
+  {
+    modes = { "x", "o" },
+    key = "ia",
+    action = function()
+      require("nvim-treesitter-textobjects.select").select_textobject("@parameter.inner", "textobjects")
+    end,
+    desc = "",
+  },
 }
 
 -- SSR 配置
@@ -130,13 +162,13 @@ M.lsp = {
   },
 }
 
--- Gitsigns 配置（修正键位）
+-- Gitsigns 配置
 M.gitsigns = {
   {
     modes = { "n" },
     key = "<leader>gn",
     action = function()
-      require('gitsigns').nav_hunk('next')
+      require("gitsigns").nav_hunk "next"
     end,
     desc = "next hunk",
   },
@@ -144,7 +176,7 @@ M.gitsigns = {
     modes = { "n" },
     key = "<leader>gp",
     action = function()
-      require('gitsigns').nav_hunk('prev')
+      require("gitsigns").nav_hunk "prev"
     end,
     desc = "prev hunk",
   },
@@ -152,7 +184,7 @@ M.gitsigns = {
     modes = { "n" },
     key = "<leader>ph",
     action = function()
-      require('gitsigns').preview_hunk()
+      require("gitsigns").preview_hunk()
     end,
     desc = "preview hunk",
   },
@@ -160,7 +192,7 @@ M.gitsigns = {
     modes = { "n" },
     key = "<leader>rh",
     action = function()
-      require('gitsigns').reset_hunk()
+      require("gitsigns").reset_hunk()
     end,
     desc = "reset hunk",
   },
@@ -168,7 +200,7 @@ M.gitsigns = {
     modes = { "n" },
     key = "<leader>bl",
     action = function()
-      require('gitsigns').blame_line()
+      require("gitsigns").blame_line()
     end,
     desc = "blame line",
   },
