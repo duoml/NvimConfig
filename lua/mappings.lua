@@ -166,7 +166,7 @@ M.lsp = {
 M.gitsigns = {
   {
     modes = { "n" },
-    key = "<leader>gn",
+    key = "<F53>",
     action = function()
       require("gitsigns").nav_hunk "next"
     end,
@@ -174,7 +174,7 @@ M.gitsigns = {
   },
   {
     modes = { "n" },
-    key = "<leader>gp",
+    key = "<A-S-F5>",
     action = function()
       require("gitsigns").nav_hunk "prev"
     end,

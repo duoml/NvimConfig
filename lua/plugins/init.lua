@@ -46,6 +46,7 @@ return {
         "regex",
         "python",
         "kotlin",
+        "llvm",
       },
     },
   },
